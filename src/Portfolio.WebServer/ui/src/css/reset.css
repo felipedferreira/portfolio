@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+    /* box-sizing: border-box; means we will calculate height based on actual height of element*/
+    /* padding and margin IS used when calculating total width and height of an element*/
+    box-sizing: border-box;
+}
+
+/* using inheritance behavior*/
+body {
+    font-family: "Lato", serif;
+    font-weight: 400;
+    font-size: 16px;
+    /* 1.7 times bigger than the predefined line height*/
+    line-height: 1.7;
+    color: #777;
+    /* this is NOT going to be inherited!*/
+    padding: 30px;
+}

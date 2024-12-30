@@ -1,0 +1,161 @@
+.header {
+    height: 95vh;
+    background-image: linear-gradient(
+        to right bottom,
+        rgb(255 206 245 / 80%),
+        rgba(40, 180, 131, 0.9)),
+        url(/img/hero.jpg);
+    background-size: cover;
+    background-position: top;
+    /* will start from top left, top right, bottom right, bottom left */
+    clip-path: polygon(
+        /*top-left*/
+        0 0,
+        /*top-right*/
+        100% 0,
+        /*bottom-right*/
+        100% 85vh,
+        /*bottom-left*/
+        0 100%);
+    position: relative;
+}
+
+
+.logo-box {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    cursor: pointer;
+}
+.logo {
+    height: 35px;
+}
+
+
+.text-box {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+.heading-primary {
+    color: #fff;
+    backface-visibility: hidden;
+    margin-bottom: 60px;
+}
+.heading-primary-main {
+    text-transform: uppercase;
+    display: block;
+    font-size: 60px;
+    font-weight: 400;
+    letter-spacing: 35px;
+
+    /*this is a shorthand*/
+    animation: fadeInFromLeft 1s ease-out;
+    /* animation-delay: 3s; */
+    /* animation-iteration-count: 3; */
+    /* animation-direction: alternate; */
+}
+.heading-primary-sub {
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 17.4px;
+
+    animation-name: fadeInFromRight;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+}
+
+/*creating animations*/
+@keyframes fadeInFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    80% {
+        transform: translateX(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes fadeInFromRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    80% {
+        transform: translateX(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInFromBottom {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.btn:link,
+.btn:visited {
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 15px 40px;
+    display: inline-block;
+    border-radius: 100px;
+    transition: 
+        transform 200ms ease-out,
+        box-shadow 200ms ease-out;
+    position: relative;
+}
+
+.btn-animated {
+    animation: fadeInFromBottom 1s ease-out 750ms;
+    animation-fill-mode: backwards;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+.btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.btn-white {
+    background-color: #fff;
+    color: #777;
+}
+.btn::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+.btn:hover::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0;
+    transition: transform 400ms ease-out,
+                opacity 400ms ease-out;
+}
+.btn-white::after {
+    background-color: #fff;
+}

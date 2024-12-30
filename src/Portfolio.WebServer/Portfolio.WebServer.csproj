@@ -19,4 +19,8 @@
     <Folder Include="WebApiExtensions\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Portfolio.Application\Portfolio.Application.csproj" />
+  </ItemGroup>
+
 </Project>

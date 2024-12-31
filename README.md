@@ -1,0 +1,1 @@
+[![.NET Build and Test](https://github.com/felipedferreira/portfolio/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/felipedferreira/portfolio/actions/workflows/dotnet.yml)

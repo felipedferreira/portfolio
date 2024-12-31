@@ -38,10 +38,16 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
+      # Determine verbosity dynamically
+      - name: Set Variables
+        id: vars
+        run: |
+          echo "VERBOSITY=${{ inputs.verbosity || env.VERBOSITY }}" >> $GITHUB_ENV
+
       # Restore dependencies
       - name: Restore dependencies
-        run: dotnet restore --no-cache --verbosity ${{ inputs.verbosity || $VERBOSITY }}
+        run: dotnet restore --no-cache --verbosity $VERBOSITY
 
       # Build the solution
       - name: Build
-        run: dotnet build --configuration Release --no-restore --verbosity ${{ inputs.verbosity || $VERBOSITY }}
+        run: dotnet build --configuration Release --no-restore --verbosity $VERBOSITY

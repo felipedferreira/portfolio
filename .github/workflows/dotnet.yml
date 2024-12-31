@@ -1,4 +1,5 @@
 name: .NET Build and Test
+
 on:
   push:
     branches:
@@ -7,22 +8,37 @@ on:
     branches:
       - main
   workflow_dispatch: # Enables manual triggering
-  
+    inputs:
+      branch:
+        description: 'Branch to build'
+        required: false
+        default: 'main'
+      verbosity:
+        description: 'Verbosity level for dotnet commands (minimal, normal, detailed, diagnostic)'
+        required: false
+        default: 'detailed'
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout repository code
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          ref: ${{ inputs.branch || github.ref_name }} # Use input branch or default to the triggered branch
 
+      # Setup .NET Core version
       - name: Setup .NET Core version 8
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 8.0.x
 
+      # Restore dependencies
       - name: Restore dependencies
-        run: dotnet restore --no-cache --verbosity detailed
+        run: dotnet restore --no-cache --verbosity ${{ inputs.verbosity }}
 
+      # Build the solution
       - name: Build
-        run: dotnet build --configuration Release --no-restore --verbosity detailed
+        run: dotnet build --configuration Release --no-restore --verbosity ${{ inputs.verbosity }}

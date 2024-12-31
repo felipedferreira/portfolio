@@ -18,6 +18,9 @@ on:
         required: false
         default: 'detailed'
 
+env:
+  VERBOSITY: detailed
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -37,8 +40,8 @@ jobs:
 
       # Restore dependencies
       - name: Restore dependencies
-        run: dotnet restore --no-cache --verbosity ${{ inputs.verbosity }}
+        run: dotnet restore --no-cache --verbosity ${{ inputs.verbosity || $VERBOSITY }}
 
       # Build the solution
       - name: Build
-        run: dotnet build --configuration Release --no-restore --verbosity ${{ inputs.verbosity }}
+        run: dotnet build --configuration Release --no-restore --verbosity ${{ inputs.verbosity || $VERBOSITY }}

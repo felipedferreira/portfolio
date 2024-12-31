@@ -51,3 +51,7 @@ jobs:
       # Build the solution
       - name: Build
         run: dotnet build --configuration Release --no-restore --verbosity $VERBOSITY
+
+      # Run tests
+      - name: Run Tests
+        run: dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage" --verbosity $VERBOSITY

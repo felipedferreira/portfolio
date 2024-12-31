@@ -12,21 +12,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Setup .NET Core version 8
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 8.0.x
+      - name: Setup .NET Core version 8
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 8.0.x
 
-    - name: Restore dependencies
-      run: dotnet restore --no-cache --verbosity detailed
+      - name: Restore dependencies
+        run: dotnet restore --no-cache --verbosity detailed
 
-    - name: Build
-      run: dotnet build --configuration Release --no-restore --verbosity detailed
-
-    - name: Run tests
-      - name: Run tests
-        if: false
-        run: dotnet test --configuration Release --no-build --verbosity normal
+      - name: Build
+        run: dotnet build --configuration Release --no-restore --verbosity detailed

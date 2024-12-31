@@ -19,7 +19,7 @@ on:
         default: 'detailed'
 
 env:
-  VERBOSITY: detailed
+  VERBOSITY: quiet
 
 jobs:
   build-and-test:

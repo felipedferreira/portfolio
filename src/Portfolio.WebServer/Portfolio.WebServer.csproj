@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Portfolio.Application\Portfolio.Application.csproj" />
+    <ProjectReference Include="..\Portfolio.PostgresSQL\Portfolio.PostgresSQL.csproj" />
   </ItemGroup>
 
 </Project>

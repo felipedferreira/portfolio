@@ -1,8 +1,10 @@
 name: Deployment Pipeline
 
-on:
- pull_request:
-   types: [closed]
+on:  
+  workflow_run:  
+    workflows: ["Continuous Integration Pipeline"]  
+    types:  
+      - completed
 
 jobs:
   deploy:

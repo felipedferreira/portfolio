@@ -26,11 +26,11 @@ jobs:
       id: determine-branch
       run: |
         if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-        echo "BRANCH=${{ inputs.branch }}" >> $GITHUB_ENV
+          echo "BRANCH=${{ inputs.branch }}" >> $GITHUB_ENV
         elif [ "${{ github.event_name }}" == "pull_request" ]; then
-        echo "BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
+          echo "BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
         else
-        echo "BRANCH=main" >> $GITHUB_ENV
+          echo "BRANCH=main" >> $GITHUB_ENV
         fi
         echo "The branch that will be checked out is: $BRANCH"
 

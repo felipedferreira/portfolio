@@ -1,14 +1,13 @@
 name: Deployment Pipeline
 
-on:  
-  workflow_run:  
-    workflows: ["Continuous Integration Pipeline"]  
-    types:  
-      - completed
+on:
+ pull_request:
+   types: [closed]
 
 jobs:
   deploy:
+    if: github.event.action == 'closed' && github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
     - name: Displays sign of life
-      run: echo "This is working"
+      run: echo "Deployment pipeline is working"

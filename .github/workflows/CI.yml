@@ -41,7 +41,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        ref: ${{ BRANCH }}
+        ref: ${{ env.BRANCH }}
     # Setup .NET Core version
     - name: Setup .NET Core version 8
       uses: actions/setup-dotnet@v1

@@ -56,10 +56,22 @@ jobs:
       # Uploads the artifact to github
       - name: Upload artifact
         uses: actions/upload-artifact@v4
+<<<<<<< HEAD
+        id: artifact-upload-step
+        with:
+          name: portfolio
+          path: artifacts/
+          retention-days: 7
+          compression-level: 0 # no compression
+
+    - name: Output artifact ID and Url
+      run:  echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-id }} and Artifact Url is ${{ steps.artifact-upload-step.outputs.artifact-url }}'
+=======
         with:
           name: portfolio
           path: artifacts/
           retention-days: 1
+>>>>>>> ded8d7a2c2e6dc044bdef5c4fbc58ef041f420e1
 
       # Run tests
       - name: Run Tests

@@ -10,28 +10,40 @@ on:
   workflow_dispatch: # Enables manual triggering
     inputs:
       branch:
-        description: 'Branch to build'
+        description: "Branch to build"
         required: false
-        default: 'main'
+        default: "main"
       verbosity:
-        description: 'Verbosity level for dotnet commands (minimal, normal, detailed, diagnostic)'
+        description: "Verbosity level for dotnet commands (minimal, normal, detailed, diagnostic)"
         required: false
-        default: 'detailed'
+        default: "detailed"
 
 env:
   VERBOSITY: quiet
 
 jobs:
-  build-and-test:
+  pull-src-code:
     runs-on: ubuntu-latest
+      # Determine the branch to checkout
+      - name: Determine branch to checkout
+        id: determine-branch
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "BRANCH=${{ inputs.branch }}" >> $GITHUB_ENV
+          elif [ "${{ github.event_name }}" == "pull_request" ]; then
+            echo "BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
+          else
+            echo "BRANCH=main" >> $GITHUB_ENV
+          fi
+          echo "The branch that will be checked out is: $BRANCH"
 
-    steps:
       # Checkout repository code
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          ref: ${{ inputs.branch || github.ref_name }} # Use input branch or default to the triggered branch
-
+          ref: ref: ${{ env.BRANCH }}
+  build:
+    steps:
       # Setup .NET Core version
       - name: Setup .NET Core version 8
         uses: actions/setup-dotnet@v1

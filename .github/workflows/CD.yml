@@ -1,0 +1,14 @@
+name: Deployment Pipeline
+
+on:  
+  workflow_run:  
+    workflows: ["Continuous Integration Pipeline"]  
+    types:  
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Displays sign of life
+      run: echo "This is working"

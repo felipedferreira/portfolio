@@ -29,10 +29,15 @@ jobs:
     - name: Set Default value of BRANCH
       run: echo "BRANCH=main" >> $GITHUB_ENV
 
-    # Set Default value of BRANCH to main
+    # Set value of BRANCH to whatever is passed in the workflow_dispatch
     - name: Set BRANCH value when workflow_dispatch is triggered 
       if: ${{ github.event_name == 'workflow_dispatch' }}
       run: echo "BRANCH=${{ github.event.inputs.branch }}" >> $GITHUB_ENV
+
+    # Set value of BRANCH to whatever PR branch is coming from
+    - name: Set BRANCH value when pull_request is triggered 
+      if: ${{ github.event_name == 'pull_request' }}
+      run: echo "BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
 
     - name: Displays BRANCH value
       run: echo "The branch is currently $BRANCH"

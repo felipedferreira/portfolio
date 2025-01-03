@@ -29,6 +29,10 @@ jobs:
     - name: Set Default value of BRANCH
       run: echo "BRANCH=main" >> $GITHUB_ENV
 
+    # Set Default value of Verbosity to quiet
+    - name: Set Default value of VERBOSITY
+      run: echo "VERBOSITY=${{ github.event.inputs.verbosity != '' && github.event.inputs.verbosity || 'quiet' }}" >> $GITHUB_ENV
+
     # Set value of BRANCH to whatever is passed in the workflow_dispatch
     - name: Set BRANCH value when workflow_dispatch is triggered 
       if: ${{ github.event_name == 'workflow_dispatch' }}
@@ -39,14 +43,20 @@ jobs:
       if: ${{ github.event_name == 'pull_request' }}
       run: echo "BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
 
+    # Displays value of BRANCH
     - name: Displays BRANCH value
       run: echo "Branch is currently set to $BRANCH"
+    
+    # Displays value of Verbosity
+    - name: Displays Verbosity value
+      run: echo "Verbosity is currently set to $VERBOSITY"
 
     # Checkout repository code
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
         ref: ${{ env.BRANCH }}
+    
     # Setup .NET Core version
     - name: Setup .NET Core version 8
       uses: actions/setup-dotnet@v1

@@ -21,24 +21,27 @@ env:
 jobs:
   pull-src-code:
     runs-on: ubuntu-latest
-      - name: Determine branch to checkout
-        id: determine-branch
-        run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "BRANCH=${{ inputs.branch }}" >> $GITHUB_ENV
-          elif [ "${{ github.event_name }}" == "pull_request" ]; then
-            echo "BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
-          else
-            echo "BRANCH=main" >> $GITHUB_ENV
-          fi
-          echo "The branch that will be checked out is: $BRANCH"
+    steps:
+    - name: Determine branch to checkout
+      id: determine-branch
+      run: |
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          echo "BRANCH=${{ inputs.branch }}" >> $GITHUB_ENV
+        elif [ "${{ github.event_name }}" == "pull_request" ]; then
+          echo "BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
+        else
+          echo "BRANCH=main" >> $GITHUB_ENV
+        fi
+        echo "The branch that will be checked out is: $BRANCH"
 
-      # Checkout repository code
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          ref: ref: ${{ env.BRANCH }}
+    # Checkout repository code
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ env.BRANCH }}
   build:
+    runs-on: ubuntu-latest
+    needs: pull-src-code
     steps:
       # Setup .NET Core version
       - name: Setup .NET Core version 8

@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
   workflow_dispatch: # Enables manual triggering
     inputs:
       branch:
@@ -24,7 +21,6 @@ env:
 jobs:
   pull-src-code:
     runs-on: ubuntu-latest
-      # Determine the branch to checkout
       - name: Determine branch to checkout
         id: determine-branch
         run: |
@@ -50,19 +46,36 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      # Determine verbosity dynamically
+      # Determines verbosity dynamically
       - name: Set Variables
         id: vars
         run: |
           echo "VERBOSITY=${{ inputs.verbosity || env.VERBOSITY }}" >> $GITHUB_ENV
 
-      # Restore dependencies
+      # Restores dependencies
       - name: Restore dependencies
         run: dotnet restore --no-cache --verbosity $VERBOSITY
 
-      # Build the solution
+      # Builds the solution
       - name: Build
         run: dotnet build --configuration Release --no-restore --verbosity $VERBOSITY
+      
+      # Creates the artifact
+      - name: Publish artifact
+        run: dotnet publish -c Release -o artifacts --verbosity $VERBOSITY --no-build --no-restore
+      
+      # Uploads the artifact to github
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        id: artifact-upload-step
+        with:
+          name: portfolio
+          path: artifacts/
+          retention-days: 7
+          compression-level: 0 # no compression
+    
+      - name: Output artifact ID and Url
+        run:  echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-id }} and Artifact Url is ${{ steps.artifact-upload-step.outputs.artifact-url }}'
 
       # Run tests
       - name: Run Tests

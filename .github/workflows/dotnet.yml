@@ -62,9 +62,9 @@ jobs:
           path: artifacts/
           retention-days: 7
           compression-level: 0 # no compression
-
-    - name: Output artifact ID and Url
-      run:  echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-id }} and Artifact Url is ${{ steps.artifact-upload-step.outputs.artifact-url }}'
+    
+      - name: Output artifact ID and Url
+        run:  echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-id }} and Artifact Url is ${{ steps.artifact-upload-step.outputs.artifact-url }}'
         with:
           name: portfolio
           path: artifacts/

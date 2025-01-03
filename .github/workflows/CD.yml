@@ -11,4 +11,4 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: Displays sign of life
-      run: echo "This is working"
+      run: echo "Deployment pipeline is working"

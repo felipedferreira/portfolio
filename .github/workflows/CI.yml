@@ -25,23 +25,23 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-    - name: Determine branch to checkout
-      id: determine-branch
-      run: |
-        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-          echo "BRANCH=${{ inputs.branch }}" >> $GITHUB_ENV
-        elif [ "${{ github.event_name }}" == "pull_request" ]; then
-          echo "BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
-        else
-          echo "BRANCH=main" >> $GITHUB_ENV
-        fi
-        echo "BRANCH=${BRANCH}" >> $GITHUB_ENV"
+    # Set Default value of BRANCH to main
+    - name: Set Default value of BRANCH
+      run: echo "BRANCH=main" >> $GITHUB_ENV
+
+    # Set Default value of BRANCH to main
+    - name: Set BRANCH value when workflow_dispatch is triggered 
+      if: ${{ github.event_name == 'workflow_dispatch' }}
+      run: echo "BRANCH=${{ github.event.inputs.branch }}" >> $GITHUB_ENV
+
+    - name: Displays BRANCH value
+      run: echo "The branch is currently $BRANCH"
 
     # Checkout repository code
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        ref: ${{ env.BRANCH }}
+        ref: ${{ BRANCH }}
     # Setup .NET Core version
     - name: Setup .NET Core version 8
       uses: actions/setup-dotnet@v1

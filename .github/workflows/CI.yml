@@ -14,7 +14,7 @@ on:
         required: false
         default: "main"
       verbosity:
-        description: "Verbosity level for dotnet commands (minimal, normal, detailed, diagnostic)"
+        description: "Verbosity level for dotnet commands (quiet, minimal, normal, detailed, diagnostic)"
         required: false
         default: "detailed"
 
@@ -40,7 +40,7 @@ jobs:
       run: echo "BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
 
     - name: Displays BRANCH value
-      run: echo "The branch is currently $BRANCH"
+      run: echo "Branch is currently set to $BRANCH"
 
     # Checkout repository code
     - name: Checkout repository

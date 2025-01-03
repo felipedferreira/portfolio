@@ -32,8 +32,7 @@ jobs:
         else
           echo "BRANCH=main" >> $GITHUB_ENV
         fi
-        echo "BRANCH=${BRANCH}" >> $GITHUB_ENV  
-        echo "The branch that will be checked out is: ${BRANCH}"
+        echo "BRANCH=${BRANCH}" >> $GITHUB_ENV"
 
     # Checkout repository code
     - name: Checkout repository

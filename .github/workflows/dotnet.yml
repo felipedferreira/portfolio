@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
   workflow_dispatch: # Enables manual triggering
     inputs:
       branch:
@@ -32,25 +29,37 @@ jobs:
         with:
           ref: ${{ inputs.branch || github.ref_name }} # Use input branch or default to the triggered branch
 
-      # Setup .NET Core version
+      # Sets up .NET Core version
       - name: Setup .NET Core version 8
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 8.0.x
 
-      # Determine verbosity dynamically
+      # Determines verbosity dynamically
       - name: Set Variables
         id: vars
         run: |
           echo "VERBOSITY=${{ inputs.verbosity || env.VERBOSITY }}" >> $GITHUB_ENV
 
-      # Restore dependencies
+      # Restores dependencies
       - name: Restore dependencies
         run: dotnet restore --no-cache --verbosity $VERBOSITY
 
-      # Build the solution
+      # Builds the solution
       - name: Build
         run: dotnet build --configuration Release --no-restore --verbosity $VERBOSITY
+      
+      # Creates the artifact
+      - name: Publish artifact
+        run: dotnet publish -c Release -o artifacts --verbosity $VERBOSITY --no-build --no-restore
+      
+      # Uploads the artifact to github
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio
+          path: artifacts/
+          retention-days: 1
 
       # Run tests
       - name: Run Tests
